@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RTT Test</title>
+</head>
+<body>
+  <h2>Ping Server</h2>
+  <input type="text" id="ip" placeholder="Indtast IP (fx localhost)">
+  <button onclick="pingServer()">Ping</button>
+  <pre id="result"></pre>
+
+  <script>
+    function pingServer() {
+      const ip = document.getElementById('ip').value || 'localhost';
+      const start = performance.now();
+      fetch(`http://${ip}:6000/ping`)
+        .then(res => res.json())
+        .then(data => {
+          const end = performance.now();
+          const rtt = end - start;
+          document.getElementById('result').textContent =
+            `RTT: ${rtt.toFixed(2)} ms\nTimestamp: ${data.timestamp}`;
+        })
+        .catch(err => {
+          document.getElementById('result').textContent =
+            `Fejl: Kan ikke kontakte serveren på ${ip}:6000\n${err}`;
+        });
+    }
+  </script>
+</body>
+</html>
