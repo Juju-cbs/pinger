@@ -1,8 +1,10 @@
 const express = require('express');
 const responseTime = require('response-time');
+const cors = require('cors');
 const app = express();
 
 // Middleware
+app.use(cors());
 app.use(responseTime());
 app.use(express.static('public'));
 
@@ -12,16 +14,16 @@ app.get('/', (req, res) => {
 });
 
 app.get('/ping', (req, res) => {
-  res.json({ pong: true, timestamp: Date.now() });
+  res.json({
+    pong: true,
+    timestamp: Date.now(),
+    region: 'Frankfurt'
+  });
 });
 
-app.get('/login', (req, res) => {
-  res.send('Login route virker!');
-});
-
-// Konfigurer port og IP via miljøvariabler
-const PORT = process.env.PORT || 8000;
-const HOST = process.env.HOST || '0.0.0.0'; // Lyt på alle interfaces
+// Hardcoded port and host
+const PORT = 8001;
+const HOST = '0.0.0.0';
 
 app.listen(PORT, HOST, () => {
   console.log(`✅ Server kører på http://${HOST}:${PORT}`);
