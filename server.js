@@ -22,7 +22,7 @@ app.get('/ping', (req, res) => {
 });
 
 // Hardcoded port and host
-const PORT = 8001;
+const PORT = 8002;
 const HOST = '0.0.0.0';
 
 app.listen(PORT, HOST, () => {
